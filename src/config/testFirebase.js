@@ -18,7 +18,7 @@ async function testFirebase() {
     console.log('✅ Firestore read: OK →', doc.message);
 
     // Test Storage bucket access
-    console.log('✅ Storage bucket: OK →', bucket.name);
+    // console.log('✅ Storage bucket: OK →', bucket.name);
 
     // Cleanup test doc
     await db.collection('_test').doc('ping').delete();

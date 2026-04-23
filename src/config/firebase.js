@@ -12,7 +12,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-const bucket = admin.storage().bucket();
+// const bucket = admin.storage().bucket();
 
 // ─── Firestore Helpers ───────────────────────────────────────────────────────
 
@@ -50,36 +50,44 @@ async function listDocuments(collection, options = {}) {
 
 // ─── Storage Helpers ─────────────────────────────────────────────────────────
 
-async function uploadFile(localPath, destination, contentType = 'video/mp4') {
-  await bucket.upload(localPath, {
-    destination,
-    metadata: { contentType },
-  });
+// async function uploadFile(localPath, destination, contentType = 'video/mp4') {
+//   await bucket.upload(localPath, {
+//     destination,
+//     metadata: { contentType },
+//   });
 
-  // Generate signed URL valid for 2 hours (so ML can download the clip)
-  const [signedUrl] = await bucket.file(destination).getSignedUrl({
-    action: 'read',
-    expires: Date.now() + 2 * 60 * 60 * 1000,
-  });
+//   // Generate signed URL valid for 2 hours (so ML can download the clip)
+//   const [signedUrl] = await bucket.file(destination).getSignedUrl({
+//     action: 'read',
+//     expires: Date.now() + 2 * 60 * 60 * 1000,
+//   });
 
-  return signedUrl;
-}
+//   return signedUrl;
+// }
 
-async function deleteFile(destination) {
-  try {
-    await bucket.file(destination).delete();
-  } catch (err) {
-    console.warn(`Could not delete file ${destination}:`, err.message);
-  }
-}
+// async function deleteFile(destination) {
+//   try {
+//     await bucket.file(destination).delete();
+//   } catch (err) {
+//     console.warn(`Could not delete file ${destination}:`, err.message);
+//   }
+// }
+
+// module.exports = {
+//   db,
+//   bucket,
+//   createDocument,
+//   updateDocument,
+//   getDocument,
+//   listDocuments,
+//   uploadFile,
+//   deleteFile,
+// };
 
 module.exports = {
   db,
-  bucket,
   createDocument,
   updateDocument,
   getDocument,
   listDocuments,
-  uploadFile,
-  deleteFile,
 };
